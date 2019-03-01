@@ -11,4 +11,8 @@ api.register_blueprint(users_api)
 api.register_blueprint(processrun_api)
 api.register_blueprint(processmodel_api)
 
-api.run()
+@api.route("/")
+def hello():
+    return "Hello, I love Digital Ocean!"
+if __name__ == "__main__":
+    api.run()
