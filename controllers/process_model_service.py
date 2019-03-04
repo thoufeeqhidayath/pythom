@@ -12,12 +12,12 @@ class ProcessModelService:
         pass
 
 
-@ProcessModelApi.route("/process_model/gojs",methods=["GET"])
+@ProcessModelApi.route("/process_model/get_gojs",methods=["GET"])
 def retrieveg_gojs_process_type():
   processModel=process_model_repolib.ProcessModelRepo()
   process_type = ProcessTypeRepo()
   gojs=[]
-  process_name=request.args.get("processName")
+  process_name=request.args.get("processType")
   process_id=process_type.retrieve_data(process_name)
   for  i in process_id:
       gojs.append(processModel.retrievegojs_by_processtype(i))
