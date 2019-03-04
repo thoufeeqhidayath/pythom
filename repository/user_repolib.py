@@ -15,23 +15,32 @@ class UserRepo:
 
 
     def create(self,user):
+        try:
+            user_id = int(self.get_id())
+            user_data = {"id": user_id, "user": user}
+            self.users_collection.insert(user_data)
+        except Exception as e:
+            print("[ERROR] while inserting user")
 
-        user_id =int(self.get_id())
-        user_data={"id":user_id,"user":user}
-        self.users_collection.insert(user_data)
-        self.get_id()
+
 
 
     def update(self,user_id,user):
-        update_id={"id":user_id}
-        update_user={"$set":{"user":user}}
-        self.users_collection.update_many(update_id,update_user)
+        try:
+           self.users_collection.update_many({"id":user_id},{"$set":{"user":user}})
+           return
+        except Exception as e:
+            print("[ERROR] while updating from user")
+            return False
 
 
     def delete(self,user_id):
-        delete_id={"id":user_id}
-        self.users_collection.delete_one(delete_id)
-
+        try:
+            delete_id = {"id": user_id}
+            self.users_collection.delete_one(delete_id)
+        except Exception as e :
+            print("[ERROR] while updating from user")
+            return False
 
     def retrieve_all(self):
         return_user_list=[]

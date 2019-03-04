@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 from webservice.atom_service import atom_api
 from webservice.process_model_service import processmodel_api
@@ -13,6 +13,12 @@ api.register_blueprint(processmodel_api)
 
 @api.route("/")
 def hello():
-    return "Hello, I love Digital Ocean!"
+    return "Running"
+
+
+@api.errorhandler(404)
+def error_handler():
+    return jsonify({"status":404,"reason":"unknown url"})
+
 if __name__ == "__main__":
     api.run()

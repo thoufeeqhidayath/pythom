@@ -14,34 +14,59 @@ class AtomRepo:
 
 
     def create(self,atom):
-        id = self.get_id()
-        atom_data = {"id": id, "atom": atom}
-        self.atom_collection.insert(atom_data)
+
+        try:
+            id = self.get_id()
+            self.atom_collection.insert({"id": id, "atom": atom})
+            print "[INFO]inserted succesfully -ATOM"
+            return True
+
+        except Exception as e:
+            print "[ERROR] error when inserting"
+            return False
+
 
 
     def delete(self,atom_id):
-        atom_delete_id={"id":int(atom_id)}
-        self.atom_collection.delete_one(atom_delete_id)
+        try:
+            self.atom_collection.delete_one({"id": int(atom_id)})
+            return  True
+        except Exception as e:
+            print"[ERROR] when deleting from atom"
+            return False
+
+
+
 
     def update(self,atom_id,atom):
-        update_atom_id={"id":atom_id}
-        update_data={"$set":{"atom":atom}}
-        self.atom_collection.update_many(update_atom_id,update_data)
+        try:
+            self.atom_collection.update_many({"id": atom_id}, {"$set": {"atom": atom}})
+            return True
+        except Exception as e:
+            print"[ERROR] when deleting from atom"
+            return False
 
     def retrieve_by_id(self,atom_id):
-        atom_list = []
-        retrieve_atom_id={"id":atom_id}
-        atom_data=self.atom_collection.find(retrieve_atom_id,{"_id":0})
-        for atom in atom_data:
-           atom_list.append(atom)
-        return  json.dumps(atom_list)
+        try:
+            atom_list = []
+            atom_data = self.atom_collection.find({"id": atom_id}, {"_id": 0})
+            for atom in atom_data:
+                atom_list.append(atom)
+            return  json.dumps(atom_list)
+        except Exception as e:
+            print ("[ERROR] when reading data")
+            return False
 
     def retrieve_all(self):
-        atom_list = []
-        atom_data = self.atom_collection.find({},{"_id": 0})
-        for atom in atom_data:
-            atom_list.append(atom)
-        return json.dumps(atom_list)
+        try:
+            atom_list = []
+            atom_data = self.atom_collection.find({}, {"_id": 0})
+            for atom in atom_data:
+                atom_list.append(atom)
+            return json.dumps(atom_list)
+        except Exception as e:
+            print ("[ERROR] when inserting data")
+            return False
 
     def get_id(self):
         s=self.atom_collection.find_one(sort=[("id", -1)])

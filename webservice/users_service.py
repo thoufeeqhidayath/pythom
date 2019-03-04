@@ -13,9 +13,10 @@ class UsersService:
 
 @users_api.route("/user/create",methods=['POST'])
 def create():
- user=request.args.get("user")
- user_repo.create(user)
- return jsonify({"status":"created"}),200
+    user=request.args.get("user")
+    user_repo.create(user)
+    return jsonify({"status":"created"}),200
+
 
 @users_api.route("/user/delete",methods=['DELETE'])
 def delete():
