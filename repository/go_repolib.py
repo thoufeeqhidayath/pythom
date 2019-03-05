@@ -63,16 +63,18 @@ class GoRepoLib:
 
     def getgo_by_processrun(self,process_run):
         userRepo=UserRepo()
-        go_query={process_run:ObjectId(process_run)}
-        godata=self.go_collection.find({})
+        go_query={"process_run":process_run}
+        godata=self.go_collection.find(go_query)
         for instance in godata:
           if instance is not None:
               up_list = []
               up_list.append({"name": userRepo.getname_by_id(instance['user_id'])})
               up_list.append({"go": instance['go']})
-              return json.dumps(up_list, indent=2)
+              print up_list
+              return up_list
           else:
               return False
+
 
 
 

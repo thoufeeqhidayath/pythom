@@ -1,6 +1,7 @@
 import json
 import pprint
 
+from bson import ObjectId
 from pymongo import MongoClient
 
 from repository import mongo_connectionslib, db_config
@@ -69,6 +70,16 @@ class ProcessRunsRepo:
         return json.dumps(
             self.retrieve(self.processruns_collection.find({}, {"_id": 0, "process_run.vertices": 1}).skip(1).limit(2)),
             indent=2)
+    def retreive_masterids(self):
+        pass
+
+    def getid_by_master(self, master_process):
+        process_id = []
+        master_process = {"master_process": master_process}
+        process_data = self.processruns_collection.find(master_process, {"_id": 1})
+        for process in process_data:
+            process_id.append(process['_id'])
+        return process_id
 
     def get_id(self):
         s = self.processruns_collection.find_one(sort=[("id", -1)])
