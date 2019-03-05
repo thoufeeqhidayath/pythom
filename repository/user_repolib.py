@@ -1,5 +1,6 @@
 import json
 
+from bson import ObjectId
 from flask import jsonify
 from pymongo import MongoClient
 
@@ -57,6 +58,19 @@ class UserRepo:
         for user in user_data:
             return_user_list.append(user)
         return json.dumps(return_user_list)
+
+    ''' '''
+
+    def getname_by_id(self, user_id):
+        name = ""
+        user_id = {"_id": ObjectId(user_id)}
+        user_name = self.users_collection.find(user_id, {"user": 1})
+        if user_name is not None:
+            for name in user_name:
+                name = name['user']
+            return name
+        else:
+            return False
 
     def get_id(self):
         s = self.users_collection.find_one(sort=[("id", -1)])

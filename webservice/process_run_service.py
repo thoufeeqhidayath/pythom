@@ -40,3 +40,7 @@ def retrieve_by_id():
 @processrun_api.route("/processRun/retrieve_all",methods=['GET'])
 def retrieve_all():
      return jsonify(json.loads(process_repo.retrieve_all()))
+
+@processrun_api.route("/processRun/getid_by_masterprocess",methods=['GET'])
+def getid_by_masterprocess():
+    master_process=request.args.get("master_process")

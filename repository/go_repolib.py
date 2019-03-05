@@ -1,8 +1,10 @@
 import json
 
+from bson import ObjectId
 from pymongo import MongoClient
 
 import db_config
+from repository.user_repolib import UserRepo
 
 
 class GoRepoLib:
@@ -58,5 +60,24 @@ class GoRepoLib:
         except Exception as e:
             print ("[ERROR] while retrieving data`")
             return False
+
+    def getgo_by_processrun(self,process_run):
+        userRepo=UserRepo()
+        go_query={process_run:ObjectId(process_run)}
+        godata=self.go_collection.find({})
+        for instance in godata:
+          if instance is not None:
+              up_list = []
+              up_list.append({"name": userRepo.getname_by_id(instance['user_id'])})
+              up_list.append({"go": instance['go']})
+              return json.dumps(up_list, indent=2)
+          else:
+              return False
+
+
+
+        
+        
+    
 
 
