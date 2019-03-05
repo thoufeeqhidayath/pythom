@@ -70,9 +70,13 @@ class ProcessModelRepo:
     def retrievegojs_by_processtype(self,id):
         gojs_data=[]
         query={"process_type":str(id)}
-        data=self.process_models_collection.find(query,{"_id":0,"gojs":1})
+        data=self.process_models_collection.find(query,{"_id":1,"gojs":1})
         for gojs in data:
-            gojs_data.append(gojs)
+            gojs_instance={}
+            gojs_instance['gojs'] = gojs["gojs"]
+            gojs_instance['id']=str(gojs["_id"])
+            gojs_data.append(gojs_instance)
+
         return gojs_data
 
 

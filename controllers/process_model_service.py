@@ -1,5 +1,6 @@
 import json
 
+from bson import json_util
 from flask import Blueprint, request
 
 from repository import process_model_repolib
@@ -13,7 +14,7 @@ class ProcessModelService:
 
 
 @ProcessModelApi.route("/process_model/get_gojs",methods=["GET"])
-def retrieveg_gojs_process_type():
+def retrieve_gojs_process_type():
   processModel=process_model_repolib.ProcessModelRepo()
   process_type = ProcessTypeRepo()
   gojs=[]
