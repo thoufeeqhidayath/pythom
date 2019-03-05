@@ -69,8 +69,8 @@ class GoRepoLib:
           if instance is not None:
               up_list = []
               up_list.append({"name": userRepo.getname_by_id(instance['user_id'])})
+              up_list.append({"id":str(instance["_id"])})
               up_list.append({"go": instance['go']})
-              print up_list
               return up_list
           else:
               return False

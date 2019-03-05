@@ -29,7 +29,6 @@ def update():
     process_model_service.update(process_id,process_model)
     return jsonify({"status": "updated"}), 200
 
-
 @processmodel_api.route("/process_model/retrieve_by_id",methods=['GET'])
 def retrieve_by_id(self):
     user_id=int(request.args.get("process_id"))

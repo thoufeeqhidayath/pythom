@@ -20,10 +20,27 @@ class ProcessTypeRepo:
         else:
             return False
 
+    # process_ids = self.process_type_collection.find({"_id": ObjectId("5c78f3463be990173415d885")})
+    # for i in process_ids:
+    # print i
 
-        #process_ids = self.process_type_collection.find({"_id": ObjectId("5c78f3463be990173415d885")})
-        #for i in process_ids:
-           # print i
+
+    def retrieve_all_processtypes(self):
+        list_of_processtypes = []
+        process_ids = self.process_type_collection.find({}, {"_id": 1,"type":1})
+        if process_ids is not None:
+            for instance in process_ids:
+                re={}
+                re["id"]=str(instance["_id"])
+                re["type"]=str(instance["type"])
+                #list_of_processtypes.append(str(instance["_id"]))
+                #list_of_processtypes.append(str(instance["type"]))
+                list_of_processtypes.append(re)
+            return list_of_processtypes
+        else:
+            return False
+
+
 
 
 
